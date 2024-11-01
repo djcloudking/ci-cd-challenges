@@ -1,0 +1,24 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Build') {
+            steps {
+                script {
+                    docker.build("data-processing-app")
+                }
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'docker run data-processing-app python -m unittest discover tests'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                // Deploy your app (customize as needed)
+                echo 'Deployment stage (e.g., to AWS ECS or ECR)'
+            }
+        }
+    }
+}
